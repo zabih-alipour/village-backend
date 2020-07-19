@@ -1,5 +1,6 @@
 package com.alipour.product.villagesite.models;
 
+import com.alipour.product.villagesite.listeners.UserEntityListener;
 import com.alipour.product.villagesite.models.constants.UserStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "USER")
 @Getter
 @Setter
+@EntityListeners(UserEntityListener.class)
 public class User extends MutableEntity {
     @Column(name = "name")
     private String name;
@@ -26,6 +28,5 @@ public class User extends MutableEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_STATUS_ID", foreignKey = @ForeignKey(name = "fk_status_of_user"))
     private UserStatus userStatus;
-
 
 }

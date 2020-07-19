@@ -3,18 +3,24 @@ package com.alipour.product.villagesite.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
 import javax.sql.DataSource;
 
 @Configuration
+@ComponentScan(basePackages = {
+        "com.alipour.product.villagesite.listeners",
+        "com.alipour.product.villagesite.repositories",
+        "com.alipour.product.villagesite.services",
+})
 @Order(1)
 public class ApplicationConfig {
 
     @Bean("datasource")
     @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
 
