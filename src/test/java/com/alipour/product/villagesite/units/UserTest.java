@@ -13,7 +13,7 @@ public class UserTest extends ParentUnitTest {
 
 
     @Test
-    public void add__typical_user__success() {
+    public void add__typical_user__success_and_hash_password() {
         String password = "jack";
 
         User user = new User();
@@ -25,5 +25,25 @@ public class UserTest extends ParentUnitTest {
         user = userService.add(user);
         assertThat(user.getId()).isNotNull();
         assertThat(user.getPassword()).isNotEqualTo(password);
+    }
+
+    @Test
+    public void edit__change_name__success() {
+        String password = "jack";
+
+        User user = new User();
+        user.setName("Jack");
+        user.setMobileNumber("09387122552");
+        user.setPassword(password);
+        user.setUsername("jojo");
+
+        user = userService.add(user);
+        assertThat(user.getId()).isNotNull();
+
+        String name = user.getName();
+        user.setName("John");
+        user = userService.edit(user);
+        assertThat(user.getName()).isNotEqualTo(name);
+
     }
 }
