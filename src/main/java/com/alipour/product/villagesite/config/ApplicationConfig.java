@@ -1,5 +1,6 @@
 package com.alipour.product.villagesite.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +18,19 @@ import javax.sql.DataSource;
 })
 @Order(1)
 public class ApplicationConfig {
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @Value("${spring.datasource.password}")
+    private String password;
 
     @Bean("datasource")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create()
+                .username(System.getenv(username))
+                .password(System.getenv(password))
+                .build();
     }
 
 

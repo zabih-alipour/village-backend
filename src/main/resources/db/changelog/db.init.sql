@@ -1,15 +1,30 @@
 --liquibase formatted sql
 
---changeset nvoxland:1
-create  table  test1  (
-    id  int  primary  key,
-    name  varchar(255)
+--changeset Alipour:1
+create table USER_STATUS
+(
+    id        int primary key,
+    name      varchar(255) not null,
+    code      varchar(255) not null,
+    is_active varchar(255) not null
 );
---rollback drop table test1;
 
---changeset nvoxland:2
-insert  into  test1  (id,  name)  values  (1,  'name  1');
-insert  into  test1  (id,  name)  values  (2,  'name  2');
+insert into USER_STATUS (id, name, code, is_active)
+values (1, 'فعال', 'ACTIVE', 1);
+insert into USER_STATUS (id, name, code, is_active)
+values (2, 'عیرفعال', 'INACTIVE', 1);
+insert into USER_STATUS (id, name, code, is_active)
+values (3, 'معلق', 'SUSPENDED', 1);
 
---changeset nvoxland:3 dbms:oracle
-create  sequence  seq_test;
+create table USER
+(
+    id int primary key,
+    name          varchar(255) not null,
+    username      varchar(255),
+    password      varchar(255),
+    mobile_number varchar(255),
+    user_status_id int not null,
+    CONSTRAINT fk_status_of_user FOREIGN KEY (user_status_id) REFERENCES USER_STATUS(id)
+);
+
+
