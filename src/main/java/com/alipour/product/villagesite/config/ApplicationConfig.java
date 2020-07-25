@@ -6,6 +6,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 
 import javax.sql.DataSource;
@@ -24,12 +25,13 @@ public class ApplicationConfig {
     @Value("${spring.datasource.password}")
     private String password;
 
-    @Bean("datasource")
+    @Bean(name = "datasource")
+    @Primary
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create()
-                .username(System.getenv(username))
-                .password(System.getenv(password))
+                .username(username)
+                .password(password)
                 .build();
     }
 
